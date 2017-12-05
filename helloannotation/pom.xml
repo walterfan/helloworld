@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.walterfan</groupId>
+  <artifactId>helloannotation</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>helloannotation</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <apptoken.version>3.1.0-SNAPSHOT</apptoken.version>
+    <keymgmt.version>0.0.8</keymgmt.version>
+
+    <resteasy.version>3.0.11.Final</resteasy.version>
+    <httpclient.version>4.5.2</httpclient.version>
+    <logback.version>1.2.3</logback.version>
+    <slf4j.version>1.7.7</slf4j.version>
+    <dropwizard-metrics.version>3.1.0</dropwizard-metrics.version>
+    <httpasyncclient.version>4.1</httpasyncclient.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <java.version>1.8</java.version>
+    <java.source.version>${java.version}</java.source.version>
+    <java.target.version>${java.version}</java.target.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <guava.version>18.0</guava.version>
+    <surefire.version>2.18.1</surefire.version>
+
+    <httpasyncclient.version>4.1</httpasyncclient.version>
+    <influxdb.version>2.2</influxdb.version>
+  </properties>
+
+  <modules>
+    <module>test-annotation</module>
+    <module>test-sample</module>
+  </modules>
+
+
+  <dependencies>
+
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>6.11</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+</project>
