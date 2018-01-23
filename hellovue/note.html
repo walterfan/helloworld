@@ -1,0 +1,145 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel='stylesheet prefetch' href='./css/bootstrap.min.css'>
+  <link rel='stylesheet prefetch' href='./css/bootstrap-theme.min.css'>
+  <link rel='stylesheet prefetch' href='./css/note.css'>
+</head>
+<body>
+
+<div class="container">
+  <header class="page-header">
+    <div class="branding">
+      
+      <h1>Notebook</h1>
+      
+    </div>
+  </header>
+  <main id="app">
+    <router-view></router-view>
+  </main>
+</div>
+
+<!--  note list -->
+
+<template id="note-list">
+  <div>
+    
+    <div class="filters row">
+      <div class="form-group col-sm-4">
+        <input v-model="searchKey" class="form-control" id="search-element"  placeholder="Title" requred/>
+      </div>
+      <div class="actions form-group col-sm-4">
+      <router-link class="btn btn-default" v-bind:to="{path: '/add-note'}">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add
+      </router-link>
+    </div>
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Author</th>
+        <th class="col-sm-2">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="note in filteredNotes">
+        <td>
+          <router-link v-bind:to="{path: '/note/' + note.id}">{{ note.title }}</router-link>
+        </td>
+        <td>{{ note.content }}</td>
+        <td>
+          {{ note.author }}
+        </td>
+        <td>
+          <router-link class="btn btn-warning btn-xs" v-bind:to="{path: '/note/'+ note.id +'/edit'}">Edit</router-link>
+          <router-link class="btn btn-danger btn-xs" v-bind:to="{path: '/note/'+ note.id +'/delete'}">Delete</router-link>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+
+<template id="add-note">
+  <div>
+    <h2>Add new note</h2>
+    <form v-on:submit="createNote">
+      <div class="form-group">
+        <label for="add-title">Title</label>
+        <input class="form-control" id="add-title" v-model="note.title" required/>
+      </div>
+      <div class="form-group">
+        <label for="add-content">Content</label>
+        <textarea class="form-control" id="add-content" rows="10" v-model="note.content"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="add-author">Author</label>
+        <input type="text" class="form-control" id="add-author" v-model="note.author"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+      <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+    </form>
+  </div>
+</template>
+
+<template id="note">
+  <div>
+    <h2>{{ note.title }}</h2>
+    <b>Description: </b>
+    <div>{{ note.content }}</div>
+    <b>Price:</b>
+    <div>{{ note.author }}</span></div>
+    <br/>
+    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    <router-link v-bind:to="'/'">Back to note list</router-link>
+  </div>
+</template>
+
+<template id="note-edit">
+  <div>
+    <h2>Edit note</h2>
+    <form v-on:submit="updateNote">
+      <div class="form-group">
+        <label for="edit-title">Title</label>
+        <input class="form-control" id="edit-title" v-model="note.title" required/>
+      </div>
+      <div class="form-group">
+        <label for="edit-content">Content</label>
+        <textarea class="form-control" id="edit-content" rows="3" v-model="note.content"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="edit-author">Author</label>
+        <input type="number" class="form-control" id="edit-author" v-model="note.author"/>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+    </form>
+  </div>
+</template>
+
+<template id="note-delete">
+  <div>
+    <h2>Delete note {{ note.title }}</h2>
+    <form v-on:submit="deleteNote">
+      <p>The action cannot be undone.</p>
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+    </form>
+  </div>
+</template>
+
+
+<script src="./js/vue.js"></script>
+<script src="./js/vue-router.js"></script>
+<script src="./js/note.js"></script>
+<script type="text/javascript">
+  
+
+</script>
+</body>
+</html>
