@@ -1,8 +1,8 @@
 var notes = [
-  {id: 1, title: 'Plan', content: 'what to do', author: 'Walter', createTime: "2018-1-1T07:10:10Z"},
-  {id: 2, title: 'Do', content: 'do one thing one time', author: 'Walter', createTime: "2018-1-1T08:10:10Z"},
-  {id: 3, title: 'Check', content: 'review and organize', author: 'Walter', createTime: "2018-1-1T09:10:10Z"},
-  {id: 3, title: 'Action', content: 'adjust plan and do', author: 'Walter', createTime: "2018-1-1T10:10:10Z"}
+  {id: 1, title: 'Plan', content: 'what to do', tag: 'tip', createTime: "2018-1-1T07:10:10Z"},
+  {id: 2, title: 'Do', content: 'do one thing one time', tag: 'tip', createTime: "2018-1-1T08:10:10Z"},
+  {id: 3, title: 'Check', content: 'review and organize', tag: 'tip', createTime: "2018-1-1T09:10:10Z"},
+  {id: 3, title: 'Action', content: 'adjust plan and do', tag: 'tip', createTime: "2018-1-1T10:10:10Z"}
 ];
 
 function findNote (noteId) {
@@ -50,7 +50,7 @@ var NoteEdit = Vue.extend({
         id: note.id,
         title: note.title,
         content: note.content,
-        author: note.author
+        tag: note.tag
       };
       router.push('/');
     }
@@ -73,7 +73,7 @@ var NoteDelete = Vue.extend({
 var AddNote = Vue.extend({
   template: '#add-note',
   data: function () {
-    return {note: {title: '', content: '', author: ''}}
+    return {note: {title: '', content: '', tag: ''}}
   },
   methods: {
     createNote: function() {
@@ -82,7 +82,7 @@ var AddNote = Vue.extend({
         id: Math.random().toString().split('.')[1],
         title: note.title,
         content: note.content,
-        author: note.author
+        tag: note.tag
       });
       router.push('/');
     }
