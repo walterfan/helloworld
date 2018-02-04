@@ -41,7 +41,7 @@
       <tr>
         <th>Title</th>
         <th>Content</th>
-        <th>Author</th>
+        <th>Tag</th>
         <th class="col-sm-2">Actions</th>
       </tr>
       </thead>
@@ -52,7 +52,7 @@
         </td>
         <td>{{ note.content }}</td>
         <td>
-          {{ note.author }}
+          {{ note.tag }}
         </td>
         <td>
           <router-link class="btn btn-warning btn-xs" v-bind:to="{path: '/note/'+ note.id +'/edit'}">Edit</router-link>
@@ -78,8 +78,8 @@
         <textarea class="form-control" id="add-content" rows="10" v-model="note.content"></textarea>
       </div>
       <div class="form-group">
-        <label for="add-author">Author</label>
-        <input type="text" class="form-control" id="add-author" v-model="note.author"/>
+        <label for="add-tag">Tag</label>
+        <input type="text" class="form-control" id="add-tag" v-model="note.tag"/>
       </div>
       <button type="submit" class="btn btn-primary">Create</button>
       <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
@@ -93,7 +93,7 @@
     <b>Description: </b>
     <div>{{ note.content }}</div>
     <b>Price:</b>
-    <div>{{ note.author }}</span></div>
+    <div>{{ note.tag }}</div>
     <br/>
     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
     <router-link v-bind:to="'/'">Back to note list</router-link>
@@ -113,8 +113,8 @@
         <textarea class="form-control" id="edit-content" rows="3" v-model="note.content"></textarea>
       </div>
       <div class="form-group">
-        <label for="edit-author">Author</label>
-        <input type="number" class="form-control" id="edit-author" v-model="note.author"/>
+        <label for="edit-tag">Tag</label>
+        <input type="text" class="form-control" id="edit-tag" v-model="note.tag"/>
       </div>
       <button type="submit" class="btn btn-primary">Save</button>
       <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
@@ -124,7 +124,7 @@
 
 <template id="note-delete">
   <div>
-    <h2>Delete note {{ note.title }}</h2>
+    <h2>Delete note {{ note.title }} ?</h2>
     <form v-on:submit="deleteNote">
       <p>The action cannot be undone.</p>
       <button type="submit" class="btn btn-danger">Delete</button>
