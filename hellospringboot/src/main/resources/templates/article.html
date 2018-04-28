@@ -1,0 +1,94 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Walter Fan</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="row" ng-controller="blogController">
+        <form class="form-search" role="search">
+
+            <div class="input-group add-on">
+                <input class="form-control" placeholder="keyword, faq, tags" name="srch-term" id="srch-term" type="text">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ng-click="query_article()"><i class="glyphicon glyphicon-search"></i></button>
+                    <button class="btn btn-default" type="submit" ng-click="add_article()"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+            </div>
+        </form>
+
+        <!--{"id":"10221273-488a-4e0a-8ec3-7a3021483b8e","title":"test title","content":"test content","author":null,"category":null,"tags":[],"comments":[]}-->
+
+        <table class = "tab-articles table table-striped">
+        <tr  ng-repeat="x in articles">
+            <td>{{$index + 1}}</td>
+            <td>
+
+                <p>{{x.title}}</p>
+                <p>{{x.content}}</p>
+                <div>
+                <span>{{x.author}}</span>
+                <span>{{x.category}}</span>
+                <span ng-if="x.tags.length > 0">{{x.tags}}</span>
+                </div>
+                <p>
+                <a href="#" ng-click="edit_article( x )">edit</a>,
+                <a href="#" ng-click="delete_article( x.id )">delete</a>
+                </p>
+            </td>
+        </tr>
+        </table>
+
+    </div>
+
+    <div class="row">
+
+        <form class="form-horizontal form-article" >
+
+            <div class="form-group">
+                <label for="title"  class="col-sm-2 control-label">Title</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" placeholder="Title"  ng-model="article.title">
+                </div>
+            </div>
+            <div class=" form-group">
+                <label for="content"  class="col-sm-2 control-label">Content</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="8" id="content" placeholder="Content"  ng-model="article.content"></textarea>
+                </div>
+            </div>
+            <div class=" form-group">
+                <label for="tags"  class="col-sm-2 control-label">Tags</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="tags" placeholder="Tags"  ng-model="article.tags">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category"  class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-10">
+                    <select class="form-control"  id="category"  ng-model="article.category">
+                        <option>Thinking</option>
+                        <option>Knowledge</option>
+                        <option>Technique</option>
+                        <option>Task</option>
+                        <option>Minute</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-success form-control" ng-click="save_article()">Submit</button>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+
+        </form>
+
+
+
+    </div>
+</div>
+</body>
+</html>

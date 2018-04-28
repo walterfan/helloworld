@@ -32,14 +32,9 @@ public class CassandraTemplateExample {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CassandraTemplateExample.class);
 
-    // Cassandra Database Configuration Properties
-    static final int DEFAULT_PORT = 9042;
 
-    static final String HOSTNAME = "localhost";
-    static final String KEYSPACE_NAME = "pims";
-
-    private String username ;
-    private String password ;
+    private String username = "test";
+    private String password  = "pass";
 
     // 'People' Table Column Names
     static final String AGE_COLUMN_NAME = "age";
@@ -52,9 +47,9 @@ public class CassandraTemplateExample {
     Cluster cluster;
 
 
-    CassandraTemplateExample() {
+    CassandraTemplateExample(String host, int port, String keyspace) {
         template = new CassandraTemplate(
-                connect(HOSTNAME, KEYSPACE_NAME));
+                connect(host, port, keyspace));
     }
 
     private void testCql() {
@@ -71,6 +66,20 @@ public class CassandraTemplateExample {
                 cluster.close();
             }
         }
+    }
+
+    private void execute(String cql) {
+
+
+        System.out.println("execute " + cql);
+        if(cql.startsWith("select")) {
+            List<?> aList = template.select(cql, List.class);
+            aList.forEach(System.out::println);
+        } else {
+            template.execute(cql);
+        }
+
+
     }
 
     private void testCrud() {
@@ -160,7 +169,13 @@ public class CassandraTemplateExample {
     }
 
     protected Session connect(String hostname, String keyspace) {
-        return connect(hostname, DEFAULT_PORT, keyspace);
+        return connect(hostname, 9042, keyspace);
+    }
+
+    public void close() {
+        if(null != cluster) {
+            cluster.close();
+        }
     }
 
     protected synchronized Session connect(String hostname, int port, String keyspace) {
@@ -220,9 +235,19 @@ public class CassandraTemplateExample {
                 ? tableAnnotation.value() : type.getSimpleName());
     }
 
-    public static void main(String[] args) throws UnknownHostException {
-        CassandraTemplateExample exam = new CassandraTemplateExample();
-        exam.testCql();
+    public static void main(String[] args) throws Exception {
+        String details = "{\"testPoolSj23\":{\"primary\":{\"name\":\"testPoolSj23\",\"tsVIP\":\"10.223.43.43\",\"maccVIP\":\"23.45.62.82\",\"isPrimary\":true}},\"testPoolSj21\":{\"primary\":{\"name\":\"testPoolSj21\",\"tsVIP\":\"10.223.45.45\",\"maccVIP\":\"23.45.67.89\",\"isPrimary\":true},\"backup\":{\"name\":\"testPoolSj22\",\"tsVIP\":\"10.223.47.47\",\"maccVIP\":\"23.45.66.86\",\"isPrimary\":false}},\"testPoolSj22\":{\"primary\":{\"name\":\"testPoolSj21\",\"tsVIP\":\"10.223.45.45\",\"maccVIP\":\"23.45.67.89\",\"isPrimary\":true},\"backup\":{\"name\":\"testPoolSj22\",\"tsVIP\":\"10.223.47.47\",\"maccVIP\":\"23.45.66.86\",\"isPrimary\":false}}}";
+
+        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.140", 9042, "ks_givr_local_cn");
+        exam.execute("select * from wbxtelepoolinfo where givrdomainname='nigel_primary_givr'");
+
+        String INSERT_CQL = "insert into wbxtelepoolconfig(givrdomainname, configdetails, lastmodifiedtime) values('%s', '%s', dateof(now()))";
+        String insertSql = String.format(INSERT_CQL, "nigel_primary_givr", details);
+        exam.execute(insertSql);
+
+
+        exam.execute("select * from wbxtelepoolconfig where givrdomainname='nigel_primary_givr'");
+        exam.close();
     }
 
 }

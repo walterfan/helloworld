@@ -1,0 +1,97 @@
+body {
+    padding-top: 50px;
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.table-search-result {
+    max-width: 800px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+.table-knowledgebase {
+    max-width: 750px;
+    padding: 15px;
+    margin: 0 auto;
+    font-size: 16px;
+}
+.table-knowledgebase > ul > li > a {
+    color:blue
+}
+.form-search {
+    max-width: 640px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.tab-articles {
+    max-width: 640px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-article {
+    max-width: 640px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-search .form-search-heading,
+.form-search .checkbox {
+    margin-bottom: 10px;
+}
+.form-search .checkbox {
+    font-weight: normal;
+}
+.form-search .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-search .form-control:focus {
+    z-index: 2;
+}
+.form-search input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-search input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+.add-on .input-group-btn > .btn {
+    border-left-width:0;left:-2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+}
+/* stop the glowing blue shadow */
+.add-on .form-control:focus {
+    box-shadow:none;
+    -webkit-box-shadow:none;
+    border-color:#cccccc;
+}
