@@ -1,0 +1,21 @@
+{
+  "nodes":
+  [
+    {"name":"Meeting Client",       "group":1},
+    {"name":"CB", "group":2},
+    {"name":"TA",    "group":3},
+    {"name":"TS",    "group":3},
+    {"name":"MACC",    "group":3},
+    {"name":"TAS",    "group":3},
+    {"name":"CMS",    "group":3}
+  ],
+  "links":
+  [
+    {"source":0, "target":1, "value":1},
+    {"source":1, "target":2, "value":1},
+    {"source":2, "target":3, "value":1},
+    {"source":3, "target":4, "value":1},
+    {"source":4, "target":5, "value":1},
+    {"source":5, "target":6, "value":1}
+  ]
+}

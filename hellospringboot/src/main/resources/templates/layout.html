@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="blogModule">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Troubleshooter</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css//bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}"/>
+</head>
+<body>
+<div ng-include src="'header.html'"></div>
+
+<div id="wrap">
+
+    <!-- Begin page content -->
+    <div class="container">
+        <div class="alert alert-success"
+             th:if="${globalMessage}"
+             th:text="${globalMessage}">
+            Some Success message
+        </div>
+        <div layout:fragment="content">
+            Fake content
+        </div>
+    </div>
+
+    <div id="push"><!--  --></div>
+</div>
+
+<div ng-include src="'footer.html'"></div>
+<!-- /.container -->
+
+<script type="text/javascript"  th:src="@{/js/jquery-2.2.0.min.js}"></script>
+<script type="text/javascript"  th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript"  th:src="@{/js/angular.js}"></script>
+<script type="text/javascript"  th:src="@{/js//moment.min.js}"></script>
+<script type="text/javascript"  th:src="@{/js/daterangepicker.js}"></script>
+<script type="text/javascript"  th:src="@{/js/loader.js}"></script>
+<script type="text/javascript"  th:src="@{/js/default.js}"></script>
+</body>
+</html>
+
