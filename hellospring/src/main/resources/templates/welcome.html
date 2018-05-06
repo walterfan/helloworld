@@ -1,12 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
 <head>
-    <title>Good Thymes Virtual Grocery</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
-          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <title>Welcome to Potato workshop</title>
 </head>
 <body>
-<p th:text="#{home.welcome}">Welcome to our grocery store!</p>
+
+
+<div class="row" layout:fragment="content"><br/>
+    <div class="alert alert-success" th:if="${message}">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <p th:text="${message}">Welcome to our potato store!</p>
+    </div>
+
+    <div class="alert alert-warning" th:if="${error}">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <p th:text="${error}">input error</p>
+    </div>
+
+<form class="col-md-8" role="search" action="/potatoes/search" method="post">
+    <h3 class="form-search-heading">Toast Potato </h3>
+
+    <div class="input-group add-on ">
+
+        <input class="form-control" placeholder="potato name or tag" name="keywords" id="keyword" type="text"/>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+
+    </div>
+    <div>
+        <h3>Potatoes</h3>
+        <ul class="collection">
+
+            <li th:each="potato: ${potatoes}">
+                <span th:text="${potato.name}"/>
+                <span th:text="${potato.description}"/>
+            </li>
+        </ul>
+    </div>
+</form>
+
+</div>
 </body>
 </html>
