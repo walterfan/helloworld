@@ -1,0 +1,7 @@
+- name: show return value
+  hosts: local
+  tasks:
+  - name: capture id command output
+    command: id -un
+    register: login
+  - debug: msg="logged as user {{ login.stdout }}"
