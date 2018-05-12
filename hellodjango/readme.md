@@ -49,6 +49,20 @@ gunicorn pims.wsgi:application
   - static
   - venv
 
+# Mezzanine
+
+## Install from PyPI
+$ pip install mezzanine
+
+## Create a project
+$ mezzanine-project mezzsite
+$ cd mezzsite
+
+## Create a database
+$ python manage.py createdb
+
+## Run the web server
+$ python manage.py runserver
 
 
 
