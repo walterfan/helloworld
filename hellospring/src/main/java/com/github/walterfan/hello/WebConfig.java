@@ -18,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableAutoConfiguration
 @EnableSwagger2
+
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public Docket api() {

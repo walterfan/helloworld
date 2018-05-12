@@ -26,7 +26,7 @@ public class PotatoWebController {
     @Autowired
     private PotatoService potatoService;
 
-    @RequestMapping("/")
+    @RequestMapping("/potatoes")
     public String welcome(@RequestParam(defaultValue = "Walter") String name,  Model model) {
         model.addAttribute("message", name + ",  welcome to potato workshop at " + new Date());
         return "welcome";
@@ -37,7 +37,7 @@ public class PotatoWebController {
         String keywords = request.getParameter("keywords");
         if(StringUtils.isBlank(keywords)) {
             redirectAttributes.addFlashAttribute("error" , "please input keywords");
-            return "redirect:/";
+            return "redirect:/potatoes";
         }
 
         redirectAttributes.addAttribute("keywords", keywords);
