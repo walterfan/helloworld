@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Potatoes</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet prefetch' href='./css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='./css/bootstrap-theme.min.css'>
+    <link rel='stylesheet prefetch' href='./css/potatoes.css'>
+</head>
+<body>
+
+
+
+
+<div id="app">
+    <h1>Potatoes</h1>
+    <div
+            v-for="potato in potatoes"
+            class="potatoes">
+        {{ potato.name }}:
+        <span class="lighten">
+      <span v-html="potato.description"></span> by the end of {{ potato.deadline }}
+    </span>
+    </div>
+</div>
+
+
+<script src="./js/jquery-2.2.0.min.js"></script>
+<script src="./js/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script type="text/javascript">
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            errors:[],
+            potatoes:null
+        },
+        mounted () {
+            var self = this;
+            axios
+                .get('/data/potatoes.json')
+                //.then(response)  => (this.potatoes = response.data))
+                .then(function (response) {
+                    console.log(response);
+                    self.potatoes = response.data
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    })
+</script>
+</body>
+</html>
