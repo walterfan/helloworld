@@ -1,0 +1,55 @@
+<configuration debug="false">
+
+    <!-- Ensure that logback level changes are also propagated to java.util.logging framework -->
+    <!-- See http://logback.qos.ch/manual/configuration.html#LevelChangePropagator -->
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+
+    <turboFilter class="ch.qos.logback.classic.turbo.DynamicThresholdFilter">
+        <Key>loggerLevel</Key>
+        <DefaultThreshold>ERROR</DefaultThreshold>
+        <OnHigherOrEqual>ACCEPT</OnHigherOrEqual>
+        <OnLower>NEUTRAL</OnLower>
+        <MDCValueLevelPair>
+            <value>trace</value>
+            <level>TRACE</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair>
+            <value>debug</value>
+            <level>DEBUG</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair>
+            <value>info</value>
+            <level>INFO</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair>
+            <value>warn</value>
+            <level>WARN</level>
+        </MDCValueLevelPair>
+        <MDCValueLevelPair>
+            <value>error</value>
+            <level>ERROR</level>
+        </MDCValueLevelPair>
+    </turboFilter>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS}  %-5level %logger{36} %msg%n</pattern>
+         </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+             <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <logger name="com.github.walterfan" level="INFO"/>
+    <logger name="com.gargoylesoftware" level="OFF"/>
+    <logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR"/>
+    <logger name="org.glassfish.tyrus.container.grizzly.client.GrizzlyClientSocket" level="DEBUG" />
+
+    <!-- Reduce excessive Glassfish server logger chattiness -->
+    <logger name="org.glassfish.jersey" level="ERROR"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>

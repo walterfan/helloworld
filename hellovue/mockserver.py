@@ -46,6 +46,11 @@ def tasks():
     jsonNode = read_data(MOCK_JSON_FILE_MSG)
     return generate_response(jsonNode)
 
+@app.route('/tasks', methods=['POST'])
+def addtask():
+    jsonNode = read_data(MOCK_JSON_FILE_MSG)
+    return generate_response(jsonNode)    
+
 @app.route('/<path:path>')
 def static_proxy(path):
   # send_static_file will guess the correct MIME type
