@@ -21,7 +21,7 @@ import static org.testng.Assert.assertEquals;
 public class UserTest {
 
     @Test
-    @TestCase(value = "testAge", feature = "f1779", given = "setBirthday", when="retrieveAge", then = "Age is current time minus birthday")
+    @TestCase(value = "testAge", feature = "UserManage", scenario = "CreateUser" ,given = "setBirthday", when="retrieveAge", then = "Age is current time minus birthday")
     public void testAge() throws ParseException {
         User user = new User();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -37,7 +37,7 @@ public class UserTest {
     }
 
     @Test
-    @TestCase(value = "testName", feature = "f1779", given = "setName", when="retrieveName", then = "name is same")
+    @TestCase(value = "testName", feature = "UserManage", scenario = "UpdateUser" ,given = "setName", when="retrieveName", then = "name is same")
     public void testName() throws ParseException {
         String name = "Walter";
         User user = new User();

@@ -1,5 +1,5 @@
 # Testcases
-| feature | case | scenario | given | when | then |
-|---|---|---|---|---|---|
-| f1779 | testAge |  | setBirthday | retrieveAge | Age is current time minus birthday |
-| f1779 | testName |  | setName | retrieveName | name is same |
+| # | feature | case | scenario | given | when | then |
+|---|---|---|---|---|---|---|
+| 1 | UserManage | testAge | CreateUser | setBirthday | retrieveAge | Age is current time minus birthday |
+| 2 | UserManage | testName | UpdateUser | setName | retrieveName | name is same |
