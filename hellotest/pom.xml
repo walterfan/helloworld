@@ -136,7 +136,6 @@
 			<artifactId>powermock-core</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
-            <scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -158,6 +157,12 @@
 			<artifactId>powermock-module-testng</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
 		</dependency>
 
 	</dependencies>

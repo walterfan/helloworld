@@ -77,6 +77,7 @@ var AddNote = Vue.extend({
   },
   methods: {
     createNote: function() {
+      console.log("createNode: "+this.note);
       var note = this.note;
       notes.push({
         id: Math.random().toString().split('.')[1],
