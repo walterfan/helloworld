@@ -16,8 +16,12 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -29,6 +33,11 @@ import static org.testng.Assert.assertTrue;
 @Slf4j
 public class TaskTest {
 
+    private String getTaskNames(List<Task> meetings) {
+        return meetings.stream()
+                .map(m -> m.getName())
+                .collect(Collectors.joining(","));
+    }
 
     @Test
     public void toJsonTest() throws JsonProcessingException {
@@ -58,5 +67,23 @@ public class TaskTest {
 
         Task task = Task.fromJson(json);
         assertEquals(30, task.getDuration().toMinutes());
+    }
+
+    @Test
+    public void testTimestamp() {
+        long duration = System.currentTimeMillis()/1000 - 1516398923L;
+
+        System.out.println(duration/86400);
+
+        Task task = new Task();
+        task.setName("task1");
+
+        Task task2 = new Task();
+        task2.setName("task2");
+
+        List<Task> list = Arrays.asList(task, task2);
+
+        String taskNames = getTaskNames(list);
+        System.out.println(taskNames);
     }
 }

@@ -6,9 +6,6 @@ import lombok.Data;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by yafan on 3/12/2017.
- */
 
 @Data
 public class User {
