@@ -19,6 +19,8 @@ public class ArticleTest {
     public void testFromJson() throws IOException {
         String jsonStr = loadJson("article.json");
         Article article = JsonWrapper.getInstance().fromJson(jsonStr, Article.typeRef());
+        
+        log.info(JsonWrapper.getInstance().toPrettyString(article));
 
         assertEquals("test title", article.getTitle());
     }

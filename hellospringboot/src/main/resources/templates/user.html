@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+    <title>Welcome</title>
+</head>
+<body>
+
+
+<div class="row" layout:fragment="content"><br/>
+
+    <main id="app">
+        <router-view></router-view>
+    </main>
+
+    <template id="user-list">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>PhoneNumber</th>
+                    <th>Role</th>
+                    <th class="col-sm-2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(user, index) in users" :key="index">
+                    <td>{{ index + 1 }}</td>
+                    <td>
+                        <router-link v-bind:to="{path: '/users/' + user.id}">{{ user.username}}</router-link>
+                    </td>
+                    <td>{{ user.email}}</td>
+                    <td>{{ user.phoneNumber}}</td>
+                    <td>{{ user.roles}}</td>
+                    <td>
+                        <router-link class="btn btn-warning btn-xs" v-bind:to="{path: '/useres/'+ user.id +'/edit'}">Edit</router-link>
+                        <router-link class="btn btn-danger btn-xs" v-bind:to="{path: '/useres/'+ user.id +'/delete'}">Delete</router-link>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </template>
+    
+    <template id="add-user">
+        <div>
+            <h2>Add User</h2>
+            <form v-on:submit="createUser">
+                <div class="form-group">
+                    <label for="add-name">Name</label>
+                    <input class="form-control" id="add-name" v-model="user.username" placeholder="user name" required/>
+                </div>
+                <div class="form-group">
+                    <label for="add-email">Email</label>
+                    <input type="text" class="form-control" id="add-email" v-model="user.email"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add-phoneNumber">phoneNumber</label>
+                    <input type="text" class="form-control" id="add-phoneNumber" v-model="user.phoneNumber"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add-password">Password</label>
+                    <input type="password" class="form-control" id="add-password" v-model="user.password"/>
+                </div>
+                
+                <div class="form-group">
+                    <label for="add-roles">Roles</label>
+                    <input type="roles" class="form-control" id="add-roles" v-model="user.roles"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+                <router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+            </form>
+        </div>
+    </template>
+</div>
+</body>
+</html>

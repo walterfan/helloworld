@@ -1,12 +1,15 @@
-package com.github.walterfan.blog;
+package com.github.walterfan.blog.service;
 
 import com.github.walterfan.blog.entity.Article;
+import com.github.walterfan.blog.repository.ArticleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by yafan on 17/12/2017.
@@ -25,8 +28,8 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public Article readArticle(String id) {
-        return articleRepository.findOne(id);
+    public Optional<Article> readArticle(String id) {
+        return articleRepository.findById(id);
     }
 
     public List<Article> readArticles(int page, int size) {
@@ -36,6 +39,6 @@ public class ArticleService {
     }
 
     public void deleteArticle(String id) {
-        articleRepository.delete(id);
+        articleRepository.deleteById(id);
     }
 }
