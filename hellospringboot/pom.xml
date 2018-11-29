@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>2.0.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -29,16 +29,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sourceforge.nekohtml</groupId>
-			<artifactId>nekohtml</artifactId>
-			<version>1.9.22</version>
-		</dependency>
+		
+		    <dependency>
+		      <groupId>org.springframework.boot</groupId>
+		      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		    </dependency>
+		
+		      <dependency>
+		          <groupId>nz.net.ultraq.thymeleaf</groupId>
+		          <artifactId>thymeleaf-layout-dialect</artifactId>
+		      </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -113,6 +113,39 @@
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
         </dependency>
+
+<dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>3.3.7-1</version>
+
+  </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>3.1.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.webjars/vue -->
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>vue</artifactId>
+      <version>2.5.16</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.webjars.npm</groupId>
+      <artifactId>vue-router</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars.bower</groupId>
+      <artifactId>axios</artifactId>
+      <version>0.17.1</version>
+    </dependency>
 
 	</dependencies>
 

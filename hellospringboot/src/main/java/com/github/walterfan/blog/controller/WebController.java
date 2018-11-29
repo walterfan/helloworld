@@ -1,4 +1,4 @@
-package com.github.walterfan.blog;
+package com.github.walterfan.blog.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ public class WebController {
     public String index() {
         return "index";
     }
+
 
 
 }

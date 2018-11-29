@@ -1,8 +1,10 @@
-package com.github.walterfan.blog;
+package com.github.walterfan.blog.controller;
 
 import com.github.walterfan.blog.dto.ArticleRequest;
 import com.github.walterfan.blog.dto.ArticleResponse;
 import com.github.walterfan.blog.entity.Article;
+import com.github.walterfan.blog.service.ArticleService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ import java.util.List;
  * Created by yafan on 17/12/2017.
  */
 @RestController
-@RequestMapping("/blog/api/v1")
+@RequestMapping("/api/v1")
 @Slf4j
 public class ArticleApiController {
 
@@ -42,7 +44,7 @@ public class ArticleApiController {
     @RequestMapping(value = "/articles/{id}" , method = RequestMethod.GET)
     public Article readArticle(@PathVariable("id") String articleId) {
         log.info("readArticle: " + articleId);
-        return articleService.readArticle(articleId);
+        return articleService.readArticle(articleId).orElse(null);
     }
 
     @RequestMapping(value = "/articles" , method = RequestMethod.GET)
