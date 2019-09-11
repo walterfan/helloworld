@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.walterfan</groupId>
-	<artifactId>helloconcurrency</artifactId>
+	<artifactId>hellozookeeper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hellospringboot</name>
 	<description>Demo project for Spring Boot</description>
@@ -28,16 +28,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>28.0-jre</version>
-        </dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
 		</dependency>
 	</dependencies>
 
