@@ -1,0 +1,8 @@
+database:
+    name: SQLite
+    driver: org.sqlite.JDBC
+    url: jdbc:sqlite:/home/walter/data/wfdb.s3db
+    username: walter
+    password: pass1234
+
+cluster: lab

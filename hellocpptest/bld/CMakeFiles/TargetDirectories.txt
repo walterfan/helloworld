@@ -1,0 +1,4 @@
+/workspace/java/helloworld/hellocpptest/bld/CMakeFiles/rebuild_cache.dir
+/workspace/java/helloworld/hellocpptest/bld/CMakeFiles/edit_cache.dir
+/workspace/java/helloworld/hellocpptest/bld/CMakeFiles/unittest.dir
+/workspace/java/helloworld/hellocpptest/bld/CMakeFiles/main.dir
