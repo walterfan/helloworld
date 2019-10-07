@@ -1,0 +1,7 @@
+database:
+    name: MySQL
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://waltersite/wfdb?useUnicode=true&characterEncoding=utf8
+    username: walter
+    password: pass1234
+cluster: prod

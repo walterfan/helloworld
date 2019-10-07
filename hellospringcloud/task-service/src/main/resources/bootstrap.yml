@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: taskservice
+
+  cloud:
+    config:
+      uri: http://localhost:9002
+      fail-fast: true
+
+  profiles:
+    active: dev
