@@ -148,9 +148,13 @@ public class ArticleClient {
 
     public static void main(String[] args) throws ParseException, IOException {
 
-        ArticleClient articleClient = new ArticleClient("http://localhost:8090/blog/api/v1/articles");
+        ArticleClient articleClient = new ArticleClient("http://localhost:8090/api/v1/articles");
         if(args.length == 0) {
-            Article article = Article.builder().id(UUID.randomUUID().toString()).title("test title").content("test content").build();
+            Article article = Article.builder()
+                    .id(UUID.randomUUID().toString())
+                    .title("test title")
+                    .content("test content")
+                    .build();
 
             log.info("create {} " , article.toString());
             articleClient.createArticle(article);

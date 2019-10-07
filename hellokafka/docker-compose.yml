@@ -1,0 +1,11 @@
+version: '2'
+services:
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    environment:
+      ZK_HOSTS: 192.168.0.66:62181,192.168.0.66:62182,192.168.0.66:62183
+      APPLICATION_SECRET: "letmein"
+    ports:
+      - "39000:9000"
+    expose:
+      - "9000"
