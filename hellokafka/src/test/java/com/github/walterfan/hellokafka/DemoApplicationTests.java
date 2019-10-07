@@ -1,5 +1,6 @@
 package com.github.walterfan.hellokafka;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -41,4 +42,5 @@ public class DemoApplicationTests {
 	@Test
 	public void testAutoCommit() throws Exception {
 	}
+
 }
