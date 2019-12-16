@@ -1,4 +1,4 @@
-package com.github.walterfan;
+package com.github.walterfan.hellometrics;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
