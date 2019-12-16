@@ -42,7 +42,7 @@ public class HttpServerHandler extends ChannelInboundHandlerAdapter {
             } else {
 
                     final DefaultHttpRequest request = (DefaultHttpRequest) msg;
-                    final String responseMessage = "haha, pls add HTTP header: \nConnection: Upgrade\nUpgrade: WebSocket\n";
+                    final String responseMessage = "haha, pls add HTTP header: \nConnection: Upgrade\nUpgrade: websocket\n";
                     FullHttpResponse response = new DefaultFullHttpResponse(
                             HttpVersion.HTTP_1_1,
                             HttpResponseStatus.OK,
