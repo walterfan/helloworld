@@ -1,4 +1,4 @@
-package com.github.walterfan;
+package com.github.walterfan.hellometrics;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
