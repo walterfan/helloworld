@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Guest book</title>
+ 
+ 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <style type="text/css">
+        .tips {font-size: 12px; color: red;}
+    </style>
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Guest book</h3>
+        </div>
+ 
+        <div class="row marketing">
+        <div class="col-lg-10">
+
+            <form action='/addmessage' method='post'>
+      
+                <div>
+                    <div><label for="subject">Subject: </label></div>
+                    <textarea name='subject' rows="1" cols="100"></textarea>
+                </div>
+                <div>
+                    <div><label for="content">Content: </label></div>
+                    <textarea name='content' rows="3" cols="100"></textarea>
+                </div>
+                <div>
+                    <div><label for="author">Author: </label></div>
+                    <textarea name='author' rows="1" cols="100"></textarea>
+                </div>
+
+                <div>
+                    <input type='submit'></input>
+                </div>
+            </form>
+        </div>
+        </div>
+        <br/><hr/>
+        <footer class="footer">
+            <p>&copy; Walter Fan's Personal Studio 2017</p>
+        </footer>
+ 
+    </div>
+</body>
+ 
+</html>
+

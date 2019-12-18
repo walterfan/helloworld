@@ -31,7 +31,7 @@ logger = init_logger(__name__)
 
 
 # Connnect to database
-db = dataset.connect('sqlite:///ivr-service.db')
+db = dataset.connect('sqlite:///guestbook.db')
 
 # create your local table
 table = db['results']
@@ -42,34 +42,34 @@ app = Flask(__name__)
 def main():
    return render_template('index.html')
 
-@app.route("/console")
-def web_console():
+@app.route("/guestbook")
+def guestbook():
     results = table.find()
-    return render_template('web_console.html', results=results)
+    return render_template('guestbook.html', results=results)
 
 @app.route("/help")
 def readme():
-    with open("README.md") as fp:
+    with open("readme.md") as fp:
         fileContent = fp.read()
         html = markdown.markdown(fileContent, extensions=['markdown.extensions.tables', 'markdown.extensions.nl2br'])
         return html
 
 
-@app.route("/console/clear")
+@app.route("/clear")
 def clear_console():
     table.delete()
     results = []
     return render_template('web_console.html', results=results)
 
 
-@app.route("/console/execute", methods=['POST'])
+@app.route("/addmessage", methods=['POST'])
 def submit():
-    parameters = dict(command=request.form['command'], input=request.form['input'])
+    parameters = dict(command=request.form['subject'], input=request.form['content'])
     output = parameters["input"]
     logger.info(parameters)
     parameters["output"] = output
     table.insert(parameters)
-    return redirect(url_for('web_console'))
+    return redirect(url_for('guestbook'))
 
 if __name__ == "__main__":
 

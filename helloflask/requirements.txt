@@ -2,3 +2,4 @@ flask
 flask-httpauth
 requests
 httpie
+dataset
