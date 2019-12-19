@@ -56,10 +56,10 @@ def readme():
 
 
 @app.route("/clear")
-def clear_console():
+def clear():
     table.delete()
     results = []
-    return render_template('web_console.html', results=results)
+    return render_template('guestbook.html', results=results)
 
 
 @app.route("/addmessage", methods=['POST'])
@@ -67,7 +67,7 @@ def submit():
     parameters = dict(command=request.form['subject'], input=request.form['content'])
     output = parameters["input"]
     logger.info(parameters)
-    parameters["output"] = output
+    parameters["author"] = request.form['author']
     table.insert(parameters)
     return redirect(url_for('guestbook'))
 
