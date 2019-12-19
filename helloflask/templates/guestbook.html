@@ -18,7 +18,7 @@
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Home</a>
+                    <li role="presentation" class="active"><a href="/">Home</a>
                     </li>
                 </ul>
             </nav>
@@ -49,7 +49,20 @@
             </form>
         </div>
         </div>
-        <br/><hr/>
+        <br/>
+        <div>
+            <h2>Left Messages</h2>
+
+            {% for result in results %}
+            <hr>
+
+            <h3>{{ result['subject'] }}</h3>
+            <textarea rows="2" cols="60" class="textbox">{{ result['content'] }}</textarea>
+
+            {% endfor %}
+
+        </div>
+        <hr/>
         <footer class="footer">
             <p>&copy; Walter Fan's Personal Studio 2017</p>
         </footer>

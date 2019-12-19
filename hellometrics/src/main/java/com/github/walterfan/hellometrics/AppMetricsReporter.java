@@ -18,6 +18,7 @@ public class AppMetricsReporter
 {
     private final MetricRegistry metricRegistry = new MetricRegistry();
     private final Meter requests = metricRegistry.meter("requests");
+    private ImageStore imageStore;
 
     public void handleRequest() {
         requests.mark();
@@ -36,10 +37,10 @@ public class AppMetricsReporter
     }
 
     public void registerGauge(){
-        metricRegistry.register(MetricRegistry.name(SessionStore.class, "cache-evictions"), new Gauge<Integer>() {
+        metricRegistry.register(MetricRegistry.name(ImageStore.class, "cache-evictions"), new Gauge<Long>() {
             @Override
-            public Integer getValue() {
-                return cache.getEvictionsCount();
+            public Long getValue() {
+                return imageStore.getEvictionsCount();
             }
         });
     }
