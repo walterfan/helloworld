@@ -8,8 +8,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
  
     <style type="text/css">
-        .tips {font-size: 12px; color: red;}
+        .guestbook form {
+            font-size: 12px; 
+            color: blue; 
+            border: 1px solid #234;
+            padding: 0.5em 2em;
+            background-color: #def;
+        }
+        .leftmessages {
+            font-size: 12px; 
+            color: blue; 
+            border: 1px solid #234;
+            padding: 0.5em 1em;
+        }
     </style>
+    
 </head>
  
 <body>
@@ -25,22 +38,23 @@
             <h3 class="text-muted">Guest book</h3>
         </div>
  
-        <div class="row marketing">
+        <div class="row guestbook">
         <div class="col-lg-10">
-
+            <h1>Guest book</h1>
+            <p>Please leave your message here:</p>
             <form action='/addmessage' method='post'>
       
                 <div>
                     <div><label for="subject">Subject: </label></div>
-                    <textarea name='subject' rows="1" cols="100"></textarea>
+                    <input type="text" id="subject" name='subject' size="32" maxlength="32"></textarea>
                 </div>
                 <div>
                     <div><label for="content">Content: </label></div>
-                    <textarea name='content' rows="3" cols="100"></textarea>
+                    <textarea name='content' id="content" rows="3" cols="100"></textarea>
                 </div>
                 <div>
                     <div><label for="author">Author: </label></div>
-                    <textarea name='author' rows="1" cols="100"></textarea>
+                    <input type"text" name='author' id="author" size="32"  maxlength="32"></textarea>
                 </div>
 
                 <div>
@@ -50,7 +64,7 @@
         </div>
         </div>
         <br/>
-        <div>
+        <div class="leftmessages">
             <h2>Left Messages</h2>
 
             {% for result in results %}
@@ -63,12 +77,32 @@
 
         </div>
         <hr/>
+        <p>&nbsp;</p>
         <footer class="footer">
             <p>&copy; Walter Fan's Personal Studio 2017</p>
         </footer>
  
     </div>
 </body>
- 
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+
+$(function() {
+
+    var currentdate = new Date(); 
+    var subject = "journal on " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + "T"  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+    var defaultUser = "Walter";
+    $("#subject").val(subject);
+    $("#content").val(subject);
+    $("#author").val(defaultUser);
+});
+
+</script>
 </html>
 
