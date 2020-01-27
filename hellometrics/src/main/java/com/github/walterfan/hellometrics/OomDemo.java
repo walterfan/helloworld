@@ -159,7 +159,7 @@ public class OomDemo {
         demo.run();
         Runtime runtime = Runtime.getRuntime();
         long memory = runtime.totalMemory() - runtime.freeMemory();
-        System.out.println(String.format("Used memory: {}m", (memory/1024/1024)));
+        System.out.println(String.format("Used memory: %dm", (memory/1024/1024)));
     }
 
     public static void main(String[] args) {
