@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OomDemo {
     private static ClassPool classPool = ClassPool.getDefault();
+    private int totalCount = 0;
     //key: language, value: countries
     private Multimap<String, String>  localeMultiMap = ArrayListMultimap.create();
     private Map<String, Set<String>> langCountriesMap = new HashMap<>();
@@ -41,7 +42,7 @@ public class OomDemo {
         if(Strings.isBlank(key) || Strings.isBlank(value)) {
             return;
         }
-
+        totalCount++;
         log.debug("addLocale {} -> {}", key, value);
         if("multimap".equals(demoType)) {
             this.localeMultiMap.put(key, value);
@@ -86,7 +87,7 @@ public class OomDemo {
 
 
     public void run() {
-        log.info("--- run demo {}---", this.demoType);
+        log.info("--- run demo {} ---", this.demoType);
         try {
             switch (this.demoType) {
                 case "heap":
@@ -108,16 +109,13 @@ public class OomDemo {
     }
     // java.lang.OutOfMemoryError: Java heap space
     private void noHeapDemo() {
-        long count = 0;
-        log.info("--- start OomDemo ---");
-        String[] locales = Locale.getISOCountries();
         for(long i =0; i < loopCount; ++i) {
             for(Locale locale: Locale.getAvailableLocales()) {
                 this.addLocale(locale.getLanguage(), locale.getCountry());
-                log.info("{}. {}", i, locale);
+                log.debug("{}/{}. {}", i, totalCount, locale);
             }
         }
-        wait4Input("exit?");
+        wait4Input(totalCount + " added, exit?");
         printLocales();
     }
 
@@ -159,16 +157,23 @@ public class OomDemo {
         int loopCount = NumberUtils.toInt(count, 1);
         OomDemo demo = new OomDemo(type, loopCount);
         demo.run();
+        Runtime runtime = Runtime.getRuntime();
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println(String.format("Used memory: {}m", (memory/1024/1024)));
     }
 
     public static void main(String[] args) {
         Options options = new Options();
 
-        Option opt = new Option("t", "type", true, "optional, sets the collection type: " +
+        Option opt = new Option("t", "type", true, "demo type: " +
                 "heap|native|meta|multimap|hashmap");
         options.addOption(opt);
 
-        opt = new Option("c", "count", true, "optional, forever or loop number");
+        opt = new Option("c", "count", true, "loop count");
+        options.addOption(opt);
+
+        opt = new Option("h", "help", false, "optional, print help");
+        opt.setRequired(false);
         options.addOption(opt);
 
         HelpFormatter hf = new HelpFormatter();
@@ -178,7 +183,8 @@ public class OomDemo {
         try {
             commandLine = parser.parse(options, args);
             if (commandLine.hasOption('h')) {
-                hf.printHelp("helper", options, true);
+                hf.printHelp("OomDemo", options, true);
+                return;
             }
 
             launchTool(commandLine.getOptionValue("t"), commandLine.getOptionValue("c"));
