@@ -8,28 +8,34 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
  * @Author: Walter Fan
- * @Date: 27/3/2020, Fri
  **/
 @Slf4j
 public class SortCardTask implements Callable<Long> {
     public enum SortMethod { BUBBLE_SORT, INSERT_SORT, TIM_SORT}
     private final List<Poker.Card> cards;
-    private SortMethod sortMethod;
+    private final SortMethod sortMethod;
+    private final int taskNumber;
 
-    public SortCardTask(List<Poker.Card> cards, SortMethod method) {
+    private final AtomicInteger taskCounter;
+
+    public SortCardTask(List<Poker.Card> cards, SortMethod method, int taskNumber, AtomicInteger taskCounter) {
         this.cards = cards;
         this.sortMethod = method;
+        this.taskNumber = taskNumber;
+        this.taskCounter = taskCounter;
     }
 
     @Override
     public Long call() {
         Stopwatch stopwatch = Stopwatch.createStarted();
+        log.info("* {} begin to sort {} cards ({} suite） by {}", this.taskNumber, cards.size(), cards.size()/52, sortMethod);
         switch(sortMethod) {
             case BUBBLE_SORT:
                 bubbleSort(cards, new Poker.CardComparator());
@@ -43,8 +49,10 @@ public class SortCardTask implements Callable<Long> {
         }
 
         stopwatch.stop();
+
         long millis = stopwatch.elapsed(MILLISECONDS);
-        log.info("{} cards sort by {} spend {} milliseconds - {}" , cards.size(), sortMethod, millis, stopwatch); // formatted string like "12.3 ms"
+        log.info("* {} end to sort {} cards ({} suite）sort by {} spend {} milliseconds - {}" , this.taskNumber, cards.size(), cards.size()/52, sortMethod, millis, stopwatch); // formatted string like "12.3 ms"
+        taskCounter.incrementAndGet();
         return millis;
     }
 
@@ -85,5 +93,13 @@ public class SortCardTask implements Callable<Long> {
 
     public static <T> void timSort(List<T> aList, Comparator<T> comparator) {
         aList.stream().sorted(comparator).collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "SortCardTask{" +
+                "taskNumber=" + taskNumber +
+                ", sortMethod=" + sortMethod +
+                '}';
     }
 }

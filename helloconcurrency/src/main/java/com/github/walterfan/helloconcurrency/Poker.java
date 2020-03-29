@@ -79,13 +79,15 @@ public class Poker {
                 cards.add(new Card(i, j));
             }
         }
-        if(suiteCount > 1) {
-            for(int j = 0; j < suiteCount - 1; j++) {
-                cards.addAll(new ArrayList<>(cards));
-            }
+
+        List<Card> totalCards = new ArrayList<>(suiteCount );
+
+        for(int j = 0; j < suiteCount; j++) {
+            totalCards.addAll(new ArrayList<>(cards));
         }
-        Collections.shuffle(cards);
-        return cards;
+
+        Collections.shuffle(totalCards);
+        return totalCards;
     }
 
     public static class CardComparator implements Comparator<Card> {

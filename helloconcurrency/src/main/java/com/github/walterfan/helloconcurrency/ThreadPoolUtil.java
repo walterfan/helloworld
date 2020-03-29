@@ -22,7 +22,7 @@ import static com.codahale.metrics.MetricRegistry.name;
 
 /**
  * @Author: Walter Fan
- * @Date: 26/3/2020, Thu
+ *
  **/
 @Slf4j
 public class ThreadPoolUtil {
@@ -40,9 +40,12 @@ public class ThreadPoolUtil {
 
 
         public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
+            rejectedMeter.mark();
+            rejectedCounter.inc();
             if (!e.isShutdown()) {
-                e.getQueue().poll();
-                e.execute(r);
+                log.warn("reject task and run {} directly", r);
+                r.run();
+
             }
         }
     }
