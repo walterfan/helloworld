@@ -1,15 +1,16 @@
 # Compiled class file
 *.class
-
+venv/
+*.iml
 # Log file
 *.log
-
+*.csv
 # BlueJ files
 *.ctxt
-
+.ipynb_checkpoints/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
+node_modules/
 # Package Files #
 *.jar
 *.war
