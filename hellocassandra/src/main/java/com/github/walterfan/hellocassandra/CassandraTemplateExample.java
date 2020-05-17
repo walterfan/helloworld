@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class CassandraTemplateExample {
 
-   private String username = "test";
+    private String username = "test";
 
     private String password  = "pass";
 
@@ -50,6 +50,11 @@ public class CassandraTemplateExample {
                 .port(port)
                 .localDC(localDC)
                 .keyspace(keyspace)
+                .username(username)
+                .password(password)
+                .maxConnectionsPerHost(2048)
+                .reconnectBaseDelayMs(1000)
+                .reconnectMaxDelayMs(600_000)
                 .build();
 
 
@@ -58,6 +63,7 @@ public class CassandraTemplateExample {
 
     private void testCql() {
         try(Session session = client.connect()) {
+
             template = new CassandraTemplate(session);
             testCrud();
             testTransaction();
