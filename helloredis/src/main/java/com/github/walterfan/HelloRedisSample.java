@@ -1,5 +1,6 @@
 package com.github.walterfan;
 
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -19,6 +20,7 @@ import java.util.Set;
  *
  * refer to http://www.baeldung.com/jedis-java-redis-client-library
  */
+@Slf4j
 public class HelloRedisSample {
 
     public static void main(String[] args) {
@@ -38,7 +40,7 @@ public class HelloRedisSample {
                 operateSortedSet(jedis);
                 operateTransaction(jedis);
                 operatePipeline(jedis);
-                operatePubsub(jedis);
+                //operatePubsub(jedis);
             }  //return connection to pool
         } //close pool
 
@@ -79,10 +81,26 @@ public class HelloRedisSample {
         jedis.hset("user#1", "name", "Peter");
         jedis.hset("user#1", "job", "politician");
 
+        jedis.hsetnx("user#1", "age", "0");
+        for(int i=0; i<20; i++) {
+            jedis.hincrBy("user#1", "age", 1);
+        }
         String name = jedis.hget("user#1", "name");
 
         Map<String, String> fields = jedis.hgetAll("user#1");
-        String job = fields.get("job");
+
+        for(Map.Entry<String,String> entry: fields.entrySet()) {
+            log.info("hash {}={}", entry.getKey(), entry.getValue());
+        }
+
+        jedis.hsetnx("user#2", "count", "0");
+        for(int i=0; i<10; i++) {
+            jedis.hincrBy("user#2", "count", 1);
+        }
+        Map<String, String> fields2 = jedis.hgetAll("user#2");
+        for(Map.Entry<String,String> entry: fields2.entrySet()) {
+            log.info("hash2 {}={}", entry.getKey(), entry.getValue());
+        }
     }
 
     public static void operateSortedSet(Jedis jedis) {

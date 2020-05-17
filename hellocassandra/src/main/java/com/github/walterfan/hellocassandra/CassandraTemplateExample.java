@@ -1,10 +1,11 @@
 package com.github.walterfan.hellocassandra;
 
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by yafan on 15/11/2017.
  */
+@Slf4j
 public class CassandraTemplateExample {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CassandraTemplateExample.class);
-
-
-    private String username = "test";
+   private String username = "test";
     private String password  = "pass";
 
     // 'People' Table Column Names
@@ -86,7 +85,7 @@ public class CassandraTemplateExample {
         System.out.println("--------- testCrud ----------------");
         Person thePerson = template.insert(Person.create("Walter Fan", 37));
 
-        LOGGER.info("Inserted [{}]", thePerson);
+        log.info("Inserted [{}]", thePerson);
 
         Person queriedPerson = queryPersonById(thePerson.getId());
         assertThat(queriedPerson).isNotSameAs(thePerson);
@@ -97,11 +96,11 @@ public class CassandraTemplateExample {
     private Person queryPersonById(String id) {
         Select personQuery = selectPerson(id);
 
-        LOGGER.info("CQL SELECT [{}]", personQuery);
+        log.info("CQL SELECT [{}]", personQuery);
 
         Person queriedPerson = template.queryForObject(personQuery, personRowMapper());
 
-        LOGGER.info("* Query Result [{}]", queriedPerson);
+        log.info("* Query Result [{}]", queriedPerson);
         return queriedPerson;
     }
 
@@ -144,9 +143,11 @@ public class CassandraTemplateExample {
 
         int i = 0;
         for(String inventory_id: inventoryIDs) {
-            template.execute(String.format("insert into inventory(user_id, inventory_id, inventory_name, name, tags, create_time, last_modified_time) " +
-                            "values (%s, %s, '%s','%s', '%s', toTimestamp(now()), toTimestamp(now()))",
-                    user_id, inventory_id, "book", "posa" + (++i), "tech"));
+            String cql = String.format("insert into inventory(user_id, inventory_id, inventory_name, name, tags, create_time, last_modified_time) " +
+                            "values (%s, %s, '%s','%s', '%s', '%s', '%s')",
+                    user_id, inventory_id, "book", "posa" + (++i), "tech", Instant.now().toString(), Instant.now().toString());
+            log.info("execute {}", cql);
+            template.execute(cql);
         }
 
 
@@ -199,12 +200,12 @@ public class CassandraTemplateExample {
         return new RowMapper<Person>() {
             public Person mapRow(Row row, int rowNum) throws DriverException {
                 try {
-                    LOGGER.debug("row [{}] @ index [{}]", row, rowNum);
+                    log.debug("row [{}] @ index [{}]", row, rowNum);
 
                     Person person = Person.create(row.getString(ID_COLUMN_NAME),
                             row.getString(NAME_COLUMN_NAME), row.getInt(AGE_COLUMN_NAME));
 
-                    LOGGER.debug("person [{}]", person);
+                    log.debug("person [{}]", person);
 
                     return person;
                 }
@@ -236,17 +237,9 @@ public class CassandraTemplateExample {
     }
 
     public static void main(String[] args) throws Exception {
-        String details = "{\"testPoolSj23\":{\"primary\":{\"name\":\"testPoolSj23\",\"tsVIP\":\"10.223.43.43\",\"maccVIP\":\"23.45.62.82\",\"isPrimary\":true}},\"testPoolSj21\":{\"primary\":{\"name\":\"testPoolSj21\",\"tsVIP\":\"10.223.45.45\",\"maccVIP\":\"23.45.67.89\",\"isPrimary\":true},\"backup\":{\"name\":\"testPoolSj22\",\"tsVIP\":\"10.223.47.47\",\"maccVIP\":\"23.45.66.86\",\"isPrimary\":false}},\"testPoolSj22\":{\"primary\":{\"name\":\"testPoolSj21\",\"tsVIP\":\"10.223.45.45\",\"maccVIP\":\"23.45.67.89\",\"isPrimary\":true},\"backup\":{\"name\":\"testPoolSj22\",\"tsVIP\":\"10.223.47.47\",\"maccVIP\":\"23.45.66.86\",\"isPrimary\":false}}}";
 
-        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.140", 9042, "ks_givr_local_cn");
-        exam.execute("select * from wbxtelepoolinfo where givrdomainname='nigel_primary_givr'");
-
-        String INSERT_CQL = "insert into wbxtelepoolconfig(givrdomainname, configdetails, lastmodifiedtime) values('%s', '%s', dateof(now()))";
-        String insertSql = String.format(INSERT_CQL, "nigel_primary_givr", details);
-        exam.execute(insertSql);
-
-
-        exam.execute("select * from wbxtelepoolconfig where givrdomainname='nigel_primary_givr'");
+        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "walter_apjc");
+        exam.testCql();
         exam.close();
     }
 
