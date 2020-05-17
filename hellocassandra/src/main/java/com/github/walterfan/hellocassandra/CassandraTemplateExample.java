@@ -8,11 +8,13 @@ import java.util.List;
 
 import com.datastax.driver.core.*;
 import com.datastax.driver.core.policies.*;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.cassandra.core.RowMapper;
+import org.springframework.cassandra.core.WriteOptions;
 import org.springframework.cassandra.support.exception.CassandraTypeMismatchException;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 
@@ -30,39 +32,52 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 
 @Slf4j
+@Setter
 public class CassandraTemplateExample {
-
-    private String username = "test";
-
-    private String password  = "pass";
 
     static final String AGE_COLUMN_NAME = "age";
     static final String ID_COLUMN_NAME = "id";
     static final String NAME_COLUMN_NAME = "name";
+    private String keyspace;
+    private CassandraTemplate template;
+    private CassandraClient client;
+    private QueryOptions queryOptions;
+    private WriteOptions writeOptions;
 
-    CassandraTemplate template;
-    CassandraClient client;
 
-
-    CassandraTemplateExample(String hostnames, int port, String localDC, String keyspace) {
+    public CassandraTemplateExample(String hostnames, int port, String localDC, String username, String password, String keysapce) {
         client = CassandraClient.builder()
                 .contactPoints(hostnames)
                 .port(port)
                 .localDC(localDC)
-                .keyspace(keyspace)
                 .username(username)
                 .password(password)
                 .maxConnectionsPerHost(2048)
                 .reconnectBaseDelayMs(1000)
                 .reconnectMaxDelayMs(600_000)
                 .build();
+        this.keyspace = keysapce;
 
+        queryOptions = this.getQueryOptions();
+        writeOptions = this.getWriteOptions(null);
 
     }
 
+    protected QueryOptions getQueryOptions() {
+        QueryOptions queryOptions = new QueryOptions();
+        queryOptions.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM);
+        return queryOptions;
+    }
+
+    protected WriteOptions getWriteOptions(Integer ttl) {
+        WriteOptions writeOptions = new WriteOptions();
+        writeOptions.setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM);
+        writeOptions.setTtl(ttl);
+        return writeOptions;
+    }
 
     private void testCql() {
-        try(Session session = client.connect()) {
+        try(Session session = client.connect(keyspace)) {
 
             template = new CassandraTemplate(session);
             testCrud();
@@ -231,7 +246,7 @@ public class CassandraTemplateExample {
 
     public static void main(String[] args) throws Exception {
 
-        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "HF1","walter_apjc");
+        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "HF1","test", "pass","walter_apjc");
         exam.testCql();
         exam.close();
     }
