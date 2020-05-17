@@ -5,6 +5,7 @@ import com.datastax.driver.core.HostDistance;
 import com.datastax.driver.core.PoolingOptions;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -24,9 +25,9 @@ public class CassandraClient {
     private long reconnectBaseDelayMs = 1000;
     private long reconnectMaxDelayMs = 300 * reconnectBaseDelayMs;
 
-    private Cluster cluster;
+    private volatile Cluster cluster;
 
-    public synchronized Cluster createCluster() {
+    public synchronized void init() {
 
             DCAwareRoundRobinPolicy loadBanalcePolicy = DCAwareRoundRobinPolicy.builder()
                     .withLocalDc(localDC)
@@ -52,11 +53,16 @@ public class CassandraClient {
             }
 
             cluster = clusterBuilder.build();
-            return cluster;
+
+
     }
 
+
     public Session connect() {
-        return cluster.connect();
+        if(null == cluster) {
+            init();
+        }
+        return this.cluster.connect(keyspace);
     }
 
     public void close() {
