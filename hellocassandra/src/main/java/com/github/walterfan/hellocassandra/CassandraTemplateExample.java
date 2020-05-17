@@ -1,11 +1,13 @@
 package com.github.walterfan.hellocassandra;
 
 import java.net.InetSocketAddress;
+
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +31,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by yafan on 15/11/2017.
  */
+
 @Slf4j
 public class CassandraTemplateExample {
 
    private String username = "test";
+
     private String password  = "pass";
 
     // 'People' Table Column Names
@@ -85,7 +89,9 @@ public class CassandraTemplateExample {
         System.out.println("--------- testCrud ----------------");
         Person thePerson = template.insert(Person.create("Walter Fan", 37));
 
+
         log.info("Inserted [{}]", thePerson);
+
 
         Person queriedPerson = queryPersonById(thePerson.getId());
         assertThat(queriedPerson).isNotSameAs(thePerson);
@@ -96,11 +102,13 @@ public class CassandraTemplateExample {
     private Person queryPersonById(String id) {
         Select personQuery = selectPerson(id);
 
+
         log.info("CQL SELECT [{}]", personQuery);
 
         Person queriedPerson = template.queryForObject(personQuery, personRowMapper());
 
         log.info("* Query Result [{}]", queriedPerson);
+
         return queriedPerson;
     }
 
@@ -143,11 +151,13 @@ public class CassandraTemplateExample {
 
         int i = 0;
         for(String inventory_id: inventoryIDs) {
+
             String cql = String.format("insert into inventory(user_id, inventory_id, inventory_name, name, tags, create_time, last_modified_time) " +
                             "values (%s, %s, '%s','%s', '%s', '%s', '%s')",
                     user_id, inventory_id, "book", "posa" + (++i), "tech", Instant.now().toString(), Instant.now().toString());
             log.info("execute {}", cql);
             template.execute(cql);
+
         }
 
 
@@ -200,12 +210,16 @@ public class CassandraTemplateExample {
         return new RowMapper<Person>() {
             public Person mapRow(Row row, int rowNum) throws DriverException {
                 try {
+
                     log.debug("row [{}] @ index [{}]", row, rowNum);
+
 
                     Person person = Person.create(row.getString(ID_COLUMN_NAME),
                             row.getString(NAME_COLUMN_NAME), row.getInt(AGE_COLUMN_NAME));
 
+
                     log.debug("person [{}]", person);
+
 
                     return person;
                 }
@@ -240,6 +254,7 @@ public class CassandraTemplateExample {
 
         CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "walter_apjc");
         exam.testCql();
+
         exam.close();
     }
 

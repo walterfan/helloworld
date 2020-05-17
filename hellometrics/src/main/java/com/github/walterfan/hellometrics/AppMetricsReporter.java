@@ -32,8 +32,8 @@ public class AppMetricsReporter
                 .build();
         reporter.start(3, TimeUnit.SECONDS);
 
-        final JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();
-        jmxReporter.start();
+        //final JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();
+        //jmxReporter.start();
     }
 
     public void registerGauge(){
