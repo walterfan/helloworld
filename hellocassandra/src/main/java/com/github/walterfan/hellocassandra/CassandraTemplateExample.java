@@ -6,22 +6,19 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
+import com.datastax.driver.core.*;
+import com.datastax.driver.core.policies.*;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.cassandra.core.RowMapper;
 import org.springframework.cassandra.support.exception.CassandraTypeMismatchException;
-import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 
 import org.springframework.data.cassandra.mapping.Table;
 
 
-import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.Session;
 import com.datastax.driver.core.exceptions.DriverException;
 import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.datastax.driver.core.querybuilder.Select;
@@ -39,42 +36,40 @@ public class CassandraTemplateExample {
 
     private String password  = "pass";
 
-    // 'People' Table Column Names
     static final String AGE_COLUMN_NAME = "age";
     static final String ID_COLUMN_NAME = "id";
     static final String NAME_COLUMN_NAME = "name";
 
+    CassandraTemplate template;
+    CassandraClient client;
 
 
-    CassandraOperations template;
-    Cluster cluster;
+    CassandraTemplateExample(String hostnames, int port, String localDC, String keyspace) {
+        client = CassandraClient.builder()
+                .contactPoints(hostnames)
+                .port(port)
+                .localDC(localDC)
+                .keyspace(keyspace)
+                .build();
 
 
-    CassandraTemplateExample(String host, int port, String keyspace) {
-        template = new CassandraTemplate(
-                connect(host, port, keyspace));
     }
 
-    private void testCql() {
-        try {
 
+    private void testCql() {
+        try(Session session = client.connect()) {
+            template = new CassandraTemplate(session);
             testCrud();
             testTransaction();
             testPagination();
+        }
 
 
-        }
-        finally {
-            if(null != cluster) {
-                cluster.close();
-            }
-        }
     }
 
     private void execute(String cql) {
 
-
-        System.out.println("execute " + cql);
+        log.info("execute {}" , cql);
         if(cql.startsWith("select")) {
             List<?> aList = template.select(cql, List.class);
             aList.forEach(System.out::println);
@@ -86,12 +81,11 @@ public class CassandraTemplateExample {
     }
 
     private void testCrud() {
-        System.out.println("--------- testCrud ----------------");
+        log.info("--------- testCrud ----------------");
         Person thePerson = template.insert(Person.create("Walter Fan", 37));
 
 
         log.info("Inserted [{}]", thePerson);
-
 
         Person queriedPerson = queryPersonById(thePerson.getId());
         assertThat(queriedPerson).isNotSameAs(thePerson);
@@ -179,31 +173,10 @@ public class CassandraTemplateExample {
         return new InetSocketAddress(hostname, port);
     }
 
-    protected Session connect(String hostname, String keyspace) {
-        return connect(hostname, 9042, keyspace);
-    }
+
 
     public void close() {
-        if(null != cluster) {
-            cluster.close();
-        }
-    }
-
-    protected synchronized Session connect(String hostname, int port, String keyspace) {
-        if (cluster == null) {
-
-            Cluster.Builder clusterBuilder = Cluster.builder()
-                    .addContactPointsWithPorts(Collections.singleton(newSocketAddress(hostname, port)));
-
-            if(StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password) ) {
-                    clusterBuilder.withCredentials(username, password);
-            }
-
-            cluster = clusterBuilder.build();
-
-        }
-
-        return cluster.connect(keyspace);
+        this.client.close();
     }
 
     protected static RowMapper<Person> personRowMapper() {
@@ -252,9 +225,8 @@ public class CassandraTemplateExample {
 
     public static void main(String[] args) throws Exception {
 
-        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "walter_apjc");
+        CassandraTemplateExample exam = new CassandraTemplateExample("10.224.38.139", 9042, "HF1","walter_apjc");
         exam.testCql();
-
         exam.close();
     }
 
