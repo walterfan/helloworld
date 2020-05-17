@@ -5,7 +5,7 @@ import com.datastax.driver.core.HostDistance;
 import com.datastax.driver.core.PoolingOptions;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.*;
-import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +17,6 @@ public class CassandraClient {
     private String contactPoints;
     private int port;
     private String localDC;
-    private String keyspace;
     private String username;
     private String password;
     private int maxConnectionsPerHost = 2048;
@@ -58,7 +57,7 @@ public class CassandraClient {
     }
 
 
-    public Session connect() {
+    public Session connect(String keyspace) {
         if(null == cluster) {
             init();
         }
