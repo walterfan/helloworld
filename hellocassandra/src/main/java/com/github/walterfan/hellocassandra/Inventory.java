@@ -1,19 +1,19 @@
 package com.github.walterfan.hellocassandra;
 
-import jnr.ffi.annotations.In;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.cassandra.core.PrimaryKeyType;
 import org.springframework.data.cassandra.mapping.Column;
-import org.springframework.data.cassandra.mapping.PrimaryKey;
+
 import org.springframework.data.cassandra.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.mapping.Table;
 
 import java.time.Instant;
 import java.util.UUID;
 
-
-/**
- * Created by yafan on 14/11/2017.
- */
+@Data
+@NoArgsConstructor
 @Table
 public class Inventory {
     @PrimaryKeyColumn(name = "user_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
@@ -48,76 +48,5 @@ public class Inventory {
     }
 
 
-    public Inventory() {
-    }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public UUID getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(UUID inventoryId) {
-        this.inventoryId = inventoryId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-    public Instant getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Instant createTime) {
-        this.createTime = createTime;
-    }
-
-    public Instant getLastmodifiedTime() {
-        return lastmodifiedTime;
-    }
-
-    public void setLastmodifiedTime(Instant lastmodifiedTime) {
-        this.lastmodifiedTime = lastmodifiedTime;
-    }
-
-
-    public String getInventoryName() {
-        return inventoryName;
-    }
-
-    public void setInventoryName(String inventoryName) {
-        this.inventoryName = inventoryName;
-    }
-
-    @Override
-    public String toString() {
-        return "Inventory{" +
-                "userId=" + userId +
-                ", inventoryId=" + inventoryId +
-                ", inventoryName='" + inventoryName + '\'' +
-                ", name='" + name + '\'' +
-                ", tags='" + tags + '\'' +
-                ", createTime=" + createTime +
-                ", lastmodifiedTime=" + lastmodifiedTime +
-                '}';
-    }
 }
