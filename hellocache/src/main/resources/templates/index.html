@@ -1,0 +1,40 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+	<title>Weather Service</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h2>The Weather of your city</h2>
+		<p th:text="${currentTime}"/>
+		<form method="get" action="/weather">
+			<div class="form-group">
+				<label for="cityName">City Name</label>
+				<input type="text" class="form-control" id="cityName" name="cityName"
+					   th:value="${cityName}" aria-describedby="cityHelp" placeholder="city Name"/>
+				<br/>
+				<small id="cityHelp" class="form-text text-muted">Please input the city name to query its weather.</small>
+			</div>
+
+			<button type="submit" class="btn btn-primary">Submit</button>
+<br/><hr/>
+			<div id="weatherDiv" style="color:green; font-size: 20px; "/>
+		</form>
+		<script th:inline="javascript">
+			var message = [[${weatherString}]];
+			var el_weather = document.getElementById("weatherDiv");
+
+			if(message) {
+				obj_weather = JSON.parse(message);
+				str_weather = JSON.stringify(obj_weather, null, 4);
+				console.log(str_weather);
+				el_weather.innerHTML = str_weather;
+			}
+
+		</script>
+
+
+	</div>
+
+
+</body>
+</html>
