@@ -1,5 +1,6 @@
 package com.github.walterfan;
 
+import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -19,51 +20,29 @@ import java.util.Set;
  *
  * refer to http://www.baeldung.com/jedis-java-redis-client-library
  */
+@Slf4j
 public class HelloRedisSample {
-
-    public static void main(String[] args) {
-
-        operationTest();
-    }
-
-    public static void operationTest() {
-        final JedisPoolConfig poolConfig = buildPoolConfig();
-        try (JedisPool jedisPool = new JedisPool(poolConfig, "localhost")) {
-            try (Jedis jedis = jedisPool.getResource()) {
-                System.out.println("Connection to server sucessfully");
-                operateString(jedis);
-                operateList(jedis);
-                operateHash(jedis);
-                operateSet(jedis);
-                operateSortedSet(jedis);
-                operateTransaction(jedis);
-                operatePipeline(jedis);
-                operatePubsub(jedis);
-            }  //return connection to pool
-        } //close pool
-
-    }
-
+    
     public static void operateString(Jedis jedis) {
-        System.out.println("--- String Operation ---");
+        log.info("--- String Operation ---");
         jedis.set("author", "walter");
-        System.out.println("The author is : " + jedis.get("author"));
+        log.info("The author is : " + jedis.get("author"));
     }
 
     public static void operateSet(Jedis jedis) {
-        System.out.println("--- Set Operation ---");
+        log.info("--- Set Operation ---");
         jedis.del("tasks");
         jedis.sadd("tasks", "task:1","task:2","task:3");
 
         Set<String> tasks = jedis.smembers("tasks");
         tasks.forEach(System.out::println);
         boolean exists = jedis.sismember("tasks", "task:1");
-        System.out.println("task:1 " + exists);
+        log.info("task:1 " + exists);
 
     }
 
     public static void operateList(Jedis jedis) {
-        System.out.println("--- List Operation ---");
+        log.info("--- List Operation ---");
         jedis.del("books");
         jedis.lpush("books", "Redis");
         jedis.lpush("books", "Mongodb");
@@ -75,18 +54,18 @@ public class HelloRedisSample {
     }
 
     public static void operateHash(Jedis jedis) {
-        System.out.println("--- Hash Operation ---");
-        jedis.hset("user#1", "name", "Peter");
-        jedis.hset("user#1", "job", "politician");
+        log.info("--- Hash Operation ---");
+        jedis.hset("user#1", "name", "Walter");
+        jedis.hset("user#1", "job", "Engineer");
 
         String name = jedis.hget("user#1", "name");
 
         Map<String, String> fields = jedis.hgetAll("user#1");
-        String job = fields.get("job");
+        fields.entrySet().stream().forEach(e -> log.info("{}->{}", e.getKey(), e.getValue()));
     }
 
     public static void operateSortedSet(Jedis jedis) {
-        System.out.println("--- SortedSet Operation ---");
+        log.info("--- SortedSet Operation ---");
         Map<String, Double> scores = new HashMap<>();
 
         scores.put("PlayerOne", 3000.0);
@@ -104,17 +83,17 @@ public class HelloRedisSample {
 
 
     public static void operateTransaction(Jedis jedis) {
-        System.out.println("--- transaction Operation ---");
+        log.info("--- transaction Operation ---");
         //jedis.watch (key1, key2, ...);
         Transaction t = jedis.multi();
         t.set("festival", "tomb-sweeping");
         t.exec();
-        System.out.println("festival: " + jedis.get("festival"));
+        log.info("festival: " + jedis.get("festival"));
 
     }
 
     public static void operatePipeline(Jedis jedis) {
-        System.out.println("--- pipeline Operation ---");
+        log.info("--- pipeline Operation ---");
         Pipeline p = jedis.pipelined();
         p.del("book-category");
         p.set("book-category", "pattern");
@@ -133,7 +112,7 @@ public class HelloRedisSample {
     }
 
     public static void operatePubsub(Jedis jedis) {
-        System.out.println("--- pubsub Operation ---");
+        log.info("--- pubsub Operation ---");
         subscribeChannel(jedis);
         //jedis.publish("channel", "test message");
 
@@ -147,7 +126,7 @@ public class HelloRedisSample {
                 jedis.subscribe(new JedisPubSub() {
                     @Override
                     public void onMessage(String channel, String message) {
-                        System.out.println("channel " + channel + ", message=" + message);
+                        log.info("channel " + channel + ", message=" + message);
                     }
                 }, "channel");
             }
@@ -169,4 +148,28 @@ public class HelloRedisSample {
         poolConfig.setBlockWhenExhausted(true);
         return poolConfig;
     }
+    
+    public static void operationTest() {
+        final JedisPoolConfig poolConfig = buildPoolConfig();
+        try (JedisPool jedisPool = new JedisPool(poolConfig, "localhost")) {
+            try (Jedis jedis = jedisPool.getResource()) {
+                log.info("Connection to server sucessfully");
+                operateString(jedis);
+                operateList(jedis);
+                operateHash(jedis);
+                operateSet(jedis);
+                operateSortedSet(jedis);
+                operateTransaction(jedis);
+                operatePipeline(jedis);
+                operatePubsub(jedis);
+            }  //return connection to pool
+        } //close pool
+
+    }
+    
+    public static void main(String[] args) {
+
+        operationTest();
+    }
+
 }

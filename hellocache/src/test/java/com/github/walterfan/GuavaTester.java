@@ -1,4 +1,4 @@
-package com.github.walterfan.hellocache;
+package com.github.walterfan;
 
 /**
  * Created by yafan on 25/12/2017.

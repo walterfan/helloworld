@@ -12,12 +12,12 @@
 				<input type="text" class="form-control" id="cityName" name="cityName"
 					   th:value="${cityName}" aria-describedby="cityHelp" placeholder="city Name"/>
 				<br/>
-				<small id="cityHelp" class="form-text text-muted">Please input the city name to query its weather.</small>
+				<small id="cityHelp" class="form-text text-muted">* please input the city name to query its weather.</small>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Submit</button>
 <br/><hr/>
-			<div id="weatherDiv" style="color:green; font-size: 20px; "/>
+			<div id="weatherDiv" style="color:green; font-size: 16px; "/>
 		</form>
 		<script th:inline="javascript">
 			var message = [[${weatherString}]];
@@ -27,7 +27,8 @@
 				obj_weather = JSON.parse(message);
 				str_weather = JSON.stringify(obj_weather, null, 4);
 				console.log(str_weather);
-				el_weather.innerHTML = str_weather;
+				str_weather = str_weather.replace(/ /g, '\u00a0')
+				el_weather.innerHTML = str_weather.replace(/(?:\r\n|\r|\n)/g, '<br/>');;
 			}
 
 		</script>

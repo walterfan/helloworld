@@ -1,5 +1,6 @@
 package com.github.walterfan.hellocache;
 
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import java.util.concurrent.ExecutionException;
 public class WeatherService {
     @Autowired
     private LoadingCache<String, CityWeather> cityWeatherCache;
+
+    @Autowired
+    private MetricRegistry metricRegistry;
+
 
     public Optional<CityWeather> getWeather(String city) {
         try {
