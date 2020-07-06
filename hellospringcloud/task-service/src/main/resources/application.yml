@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 9000
 
   
 logging:
@@ -8,6 +8,14 @@ logging:
 
 spring:
   application:
-    name: task-service
-
+    name: config-service
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+        #git:
+        #  uri: https://github.com/walterfan/helloworld
+  profiles:
+    active: native
 

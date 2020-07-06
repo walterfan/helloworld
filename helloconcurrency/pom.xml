@@ -43,6 +43,7 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.8</version>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/io.dropwizard.metrics/metrics-core -->
 		<dependency>
 			<groupId>io.dropwizard.metrics</groupId>

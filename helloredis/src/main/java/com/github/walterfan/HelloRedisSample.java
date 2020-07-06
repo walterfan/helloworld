@@ -22,7 +22,32 @@ import java.util.Set;
  */
 @Slf4j
 public class HelloRedisSample {
-    
+
+
+    public static void main(String[] args) {
+
+        operationTest();
+    }
+
+    public static void operationTest() {
+        final JedisPoolConfig poolConfig = buildPoolConfig();
+        try (JedisPool jedisPool = new JedisPool(poolConfig, "localhost")) {
+            try (Jedis jedis = jedisPool.getResource()) {
+                System.out.println("Connection to server sucessfully");
+                operateString(jedis);
+                operateList(jedis);
+                operateHash(jedis);
+                operateSet(jedis);
+                operateSortedSet(jedis);
+                operateTransaction(jedis);
+                operatePipeline(jedis);
+                //operatePubsub(jedis);
+            }  //return connection to pool
+        } //close pool
+
+    }
+
+
     public static void operateString(Jedis jedis) {
         log.info("--- String Operation ---");
         jedis.set("author", "walter");
@@ -58,10 +83,28 @@ public class HelloRedisSample {
         jedis.hset("user#1", "name", "Walter");
         jedis.hset("user#1", "job", "Engineer");
 
+        jedis.hsetnx("user#1", "age", "0");
+        for(int i=0; i<20; i++) {
+            jedis.hincrBy("user#1", "age", 1);
+        }
         String name = jedis.hget("user#1", "name");
 
         Map<String, String> fields = jedis.hgetAll("user#1");
-        fields.entrySet().stream().forEach(e -> log.info("{}->{}", e.getKey(), e.getValue()));
+
+
+        for(Map.Entry<String,String> entry: fields.entrySet()) {
+            log.info("hash {}={}", entry.getKey(), entry.getValue());
+        }
+
+        jedis.hsetnx("user#2", "count", "0");
+        for(int i=0; i<10; i++) {
+            jedis.hincrBy("user#2", "count", 1);
+        }
+        Map<String, String> fields2 = jedis.hgetAll("user#2");
+        for(Map.Entry<String,String> entry: fields2.entrySet()) {
+            log.info("hash2 {}={}", entry.getKey(), entry.getValue());
+        }
+
     }
 
     public static void operateSortedSet(Jedis jedis) {
