@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by yafan on 14/11/2017.
- */
+
 @Repository
 public interface InventoryRepository extends CrudRepository<Inventory, String> {
 

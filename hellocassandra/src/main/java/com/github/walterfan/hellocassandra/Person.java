@@ -1,17 +1,15 @@
 package com.github.walterfan.hellocassandra;
 
-/**
- * Created by yafan on 15/11/2017.
- */
 
 import java.util.UUID;
 
+import lombok.Data;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
-
+@Data
 @Table("person")
 public class Person {
 
@@ -45,52 +43,5 @@ public class Person {
         return age;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = validateAge(age);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-
-        if (!(obj instanceof Person)) {
-            return false;
-        }
-
-        Person that = (Person) obj;
-
-        return ObjectUtils.nullSafeEquals(this.getId(), that.getId())
-                || (ObjectUtils.nullSafeEquals(this.getName(), that.getName())
-                && ObjectUtils.nullSafeEquals(this.getAge(), that.getAge()));
-    }
-
-    @Override
-    public int hashCode() {
-        int hashValue = 17;
-        hashValue = 37 * hashValue + ObjectUtils.nullSafeHashCode(this.getId());
-        hashValue = 37 * hashValue + ObjectUtils.nullSafeHashCode(this.getName());
-        hashValue = 37 * hashValue + ObjectUtils.nullSafeHashCode(this.getAge());
-        return hashValue;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("{ @type = %1$s, id = %2$s, name = %3$s, age = %4$d }",
-                getClass().getName(), getId(), getName(), getAge());
-    }
 
 }

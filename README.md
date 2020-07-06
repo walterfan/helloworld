@@ -6,6 +6,8 @@ hello world for some topics
 * metrics
 * concurrency
 * netty
+* Casssnara
+* Redis
 * spring boot
 * spring cloud
 * ...
