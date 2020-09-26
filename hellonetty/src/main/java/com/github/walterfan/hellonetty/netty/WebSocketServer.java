@@ -1,14 +1,13 @@
-package com.github.walterfan;
+package com.github.walterfan.hellonetty.netty;
 
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
  * Created by yafan on 27/4/2018.
  */
-public class WebSocketServer extends AbstractTcpServer {
+public class WebSocketServer extends AbstractServer {
 
     public WebSocketServer(String host, int port) {
         super(host, port);
