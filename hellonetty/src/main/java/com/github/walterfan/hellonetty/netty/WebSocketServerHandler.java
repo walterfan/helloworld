@@ -1,4 +1,4 @@
-package com.github.walterfan;
+package com.github.walterfan.hellonetty.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

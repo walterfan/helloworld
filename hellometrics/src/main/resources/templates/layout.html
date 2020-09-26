@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Hello Cache Sample</title>
+
+		<link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+
+		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+			<script th:src="@{/webjars/html5shiv/html5shiv.min.js}" src="/webjars/html5shiv/html5shiv.min.js"></script>
+		<![endif]-->
+	</head>
+
+
+	<body>
+		<div id="wrap">
+			<div class="navbar navbar-inverse navbar-static-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<h1> <a href="/">Hello Metrics Service</a></h1>
+				</div>
+
+			</div>
+		</div>
+			<!-- Begin page content -->
+			<div class="container">
+				<div class="alert alert-success"
+							th:if="${globalMessage}"
+							th:text="${globalMessage}">
+						Some Success message
+				</div>
+				<div layout:fragment="content">
+						Fake content
+				</div>
+			</div>
+
+			<div id="push"><!--  --></div>
+		</div>
+
+		<div id="footer">
+			<div class="container">
+				<p class="muted credit">Visit the <a href="http://www.fanyamin.com">fanyamin.com</a> site for more info.</p>
+			</div>
+		</div>
+	</body>
+</html>

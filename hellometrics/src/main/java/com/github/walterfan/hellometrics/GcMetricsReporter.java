@@ -1,6 +1,7 @@
 package com.github.walterfan.hellometrics;
 
 import com.sun.management.GarbageCollectionNotificationInfo;
+import io.micrometer.core.instrument.Meter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.management.Notification;
@@ -58,5 +59,6 @@ public class GcMetricsReporter implements NotificationListener {
             emitter.addNotificationListener(listener, filter, handback);
 
         }
+        //Meter meter
     }
 }

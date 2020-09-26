@@ -1,13 +1,12 @@
-package com.github.walterfan.helloalgorithm;
+package com.github.walterfan.hellometrics;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class MetricsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(MetricsApplication.class, args);
 	}
-
 }
