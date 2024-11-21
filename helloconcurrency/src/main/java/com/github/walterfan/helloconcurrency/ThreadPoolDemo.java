@@ -2,7 +2,7 @@ package com.github.walterfan.helloconcurrency;
 
 
 import com.codahale.metrics.CsvReporter;
-import com.codahale.metrics.Slf4jReporter;
+//import com.codahale.metrics.Slf4jReporter;
 
 import com.codahale.metrics.MetricRegistry;
 

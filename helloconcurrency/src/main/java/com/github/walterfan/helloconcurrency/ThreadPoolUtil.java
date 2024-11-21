@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import java.util.function.Supplier;
 
-import static com.codahale.metrics.MetricRegistry.name;
+//import static com.codahale.metrics.MetricRegistry.name;
 
 /**
  * @Author: Walter Fan
