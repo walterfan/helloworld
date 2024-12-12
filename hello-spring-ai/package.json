@@ -1,0 +1,13 @@
+{
+    "husky": {
+    "hooks": {
+        "pre-commit": "lint-staged"
+    }
+    },
+    "lint-staged": {
+    "*.{,java}": [
+        "prettier --write",
+        "git add"
+    ]
+    }
+}

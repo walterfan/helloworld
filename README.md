@@ -1,6 +1,6 @@
-# helloworld
+# hello world
 
-hello world for some topics
+hello world for some techniques
 
 * cache
 * metrics
