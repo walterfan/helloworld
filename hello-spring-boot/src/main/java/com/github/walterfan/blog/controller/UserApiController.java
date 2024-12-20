@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.walterfan.blog.entity.User;
-import com.github.walterfan.blog.entity.User;
 import com.github.walterfan.blog.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;

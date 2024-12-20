@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.walterfan.blog.entity.User;
 import com.github.walterfan.blog.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class UserService {
@@ -30,7 +31,7 @@ public class UserService {
     }
 
     public List<User> readUsers(int page, int size) {
-        PageRequest pageRequest = new PageRequest(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size);
         Page<User> users = userRepository.findAll(pageRequest);
         return users.getContent();
     }

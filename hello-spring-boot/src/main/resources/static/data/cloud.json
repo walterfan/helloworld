@@ -1,13 +1,13 @@
 {
   "nodes":
   [
-    {"name":"Meeting Client",       "group":1},
-    {"name":"CB", "group":2},
+    {"name":"Server",       "group":1},
+    {"name":"GW", "group":2},
     {"name":"TA",    "group":3},
     {"name":"TS",    "group":3},
-    {"name":"MACC",    "group":3},
-    {"name":"TAS",    "group":3},
-    {"name":"CMS",    "group":3}
+    {"name":"CC",    "group":3},
+    {"name":"CFG",    "group":3},
+    {"name":"IVR",    "group":3}
   ],
   "links":
   [

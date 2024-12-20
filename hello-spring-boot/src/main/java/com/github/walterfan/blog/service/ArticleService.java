@@ -33,7 +33,7 @@ public class ArticleService {
     }
 
     public List<Article> readArticles(int page, int size) {
-        PageRequest pageRequest = new PageRequest(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size);
         Page<Article> articles = articleRepository.findAll(pageRequest);
         return articles.getContent();
     }
