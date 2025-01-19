@@ -29,7 +29,8 @@ hs_err_pid*
 .gradle/
 .settings/
 __pycache__/
-
+*.der
+*.pem
 target/
 .idea/
 .mvn/
